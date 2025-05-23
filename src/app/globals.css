@@ -1,0 +1,246 @@
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 222.2 84% 4.9%;
+    --card: 0 0% 100%;
+    --card-foreground: 222.2 84% 4.9%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 222.2 84% 4.9%;
+    --primary: 221.2 83.2% 53.3%;
+    --primary-foreground: 210 40% 98%;
+    --secondary: 210 40% 96.1%;
+    --secondary-foreground: 222.2 47.4% 11.2%;
+    --muted: 210 40% 96.1%;
+    --muted-foreground: 215.4 16.3% 46.9%;
+    --accent: 210 40% 96.1%;
+    --accent-foreground: 222.2 47.4% 11.2%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+    --border: 214.3 31.8% 91.4%;
+    --input: 214.3 31.8% 91.4%;
+    --ring: 221.2 83.2% 53.3%;
+  }
+
+  .dark {
+    --background: 222.2 84% 4.9%;
+    --foreground: 210 40% 98%;
+    --card: 222.2 84% 4.9%;
+    --card-foreground: 210 40% 98%;
+    --popover: 222.2 84% 4.9%;
+    --popover-foreground: 210 40% 98%;
+    --primary: 217.2 91.2% 59.8%;
+    --primary-foreground: 210 40% 98%;
+    --secondary: 217.2 32.6% 17.5%;
+    --secondary-foreground: 210 40% 98%;
+    --muted: 217.2 32.6% 17.5%;
+    --muted-foreground: 215 20.2% 65.1%;
+    --accent: 217.2 32.6% 17.5%;
+    --accent-foreground: 210 40% 98%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 210 40% 98%;
+    --border: 217.2 32.6% 17.5%;
+    --input: 217.2 32.6% 17.5%;
+    --ring: 224.3 76.3% 48%;
+  }
+}
+
+@layer base {
+  body {
+    @apply bg-gradient-to-br from-blue-50 to-indigo-50 dark:from-gray-900 dark:to-blue-950;
+    color: hsl(var(--foreground));
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    transition-property: background-color, color;
+    transition-duration: 300ms;
+  }
+
+  main {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+  }
+}
+
+/* 平滑滚动和过渡效果 */
+html {
+  scroll-behavior: smooth;
+}
+
+/* 自定义滚动条 */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.05);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(107, 114, 128, 0.3);
+  border-radius: 4px;
+  transition: background 0.2s ease;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(107, 114, 128, 0.5);
+}
+
+/* 字体平滑 */
+body {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* 磨砂玻璃效果辅助类 */
+.glass {
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+/* 卡片悬停效果 */
+.hover-lift {
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.hover-lift:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.05);
+}
+
+/* 渐变文本效果 */
+.gradient-text {
+  @apply bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-indigo-500;
+}
+
+/* 深色模式优化 */
+.dark img {
+  filter: brightness(0.9);
+}
+
+/* 导航栏样式优化 */
+.dark-header .ant-menu-item:hover {
+  background-color: rgba(255, 255, 255, 0.1) !important;
+  border-radius: 4px;
+}
+
+.dark-header .ant-menu-item-selected {
+  background-color: rgba(24, 144, 255, 0.2) !important;
+  border-radius: 4px;
+}
+
+.dark-header .ant-menu-item a:hover {
+  color: #1890ff !important;
+}
+
+.light-header .ant-menu-item:hover {
+  background-color: rgba(0, 0, 0, 0.05) !important;
+  border-radius: 4px;
+}
+
+.light-header .ant-menu-item-selected {
+  background-color: rgba(24, 144, 255, 0.1) !important;
+  border-radius: 4px;
+}
+
+/* 主题切换按钮动画 */
+.ant-switch {
+  transition: all 0.3s ease;
+}
+
+.ant-switch:hover {
+  transform: scale(1.05);
+}
+
+/* 导航栏过渡动画 */
+.ant-layout-header {
+  transition: all 0.3s ease;
+}
+
+/* 导航链接过渡效果 */
+.ant-menu-item a {
+  transition: color 0.3s ease, text-shadow 0.3s ease;
+}
+
+/* 导航菜单响应式布局 */
+.ant-menu-horizontal {
+  display: flex !important;
+  flex-wrap: nowrap !important;
+  overflow: visible !important;
+}
+
+.ant-menu-horizontal .ant-menu-item {
+  white-space: nowrap;
+  padding: 0 16px;
+}
+
+.ant-menu-horizontal .ant-menu-overflow-item {
+  flex: none !important;
+}
+
+/* 导航栏响应式调整 */
+@media (min-width: 768px) {
+  .ant-menu-horizontal {
+    min-width: 300px;
+  }
+
+  .ant-layout-header {
+    height: 64px;
+    line-height: 64px;
+  }
+
+  .ant-menu-horizontal .ant-menu-item {
+    height: 64px;
+    line-height: 64px;
+  }
+}
+
+@media (max-width: 767px) {
+  .ant-layout-header {
+    padding: 0 16px !important;
+    height: 56px;
+    line-height: 56px;
+  }
+
+  .ant-menu-horizontal {
+    justify-content: flex-end;
+  }
+
+  /* 移动端标题样式调整 */
+  .ant-layout-header .ant-typography {
+    font-size: 18px !important;
+  }
+}
+
+/* 抽屉菜单样式 */
+.ant-drawer .ant-drawer-body {
+  padding: 0;
+}
+
+.ant-drawer .ant-menu-vertical .ant-menu-item {
+  height: 50px;
+  line-height: 50px;
+  margin: 4px 0;
+  padding: 0 24px;
+}
+
+.dark .ant-drawer-content {
+  background-color: #1f1f1f;
+}
+
+.dark .ant-drawer-header {
+  background-color: #1f1f1f;
+  border-bottom: 1px solid #333;
+}
+
+.dark .ant-drawer-title {
+  color: #fff;
+}
+
+.dark .ant-drawer-close {
+  color: #fff;
+}

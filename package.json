@@ -1,0 +1,70 @@
+{
+  "name": "next-simple-compound",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev --turbopack",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "format": "prettier --write \"**/*.{js,jsx,ts,tsx,json,md}\"",
+    "format:check": "prettier --check \"**/*.{js,jsx,ts,tsx,json,md}\"",
+    "prepare": "husky"
+  },
+  "dependencies": {
+    "@ant-design/icons": "^6.0.0",
+    "@ant-design/nextjs-registry": "^1.0.2",
+    "@ant-design/v5-patch-for-react-19": "^1.0.3",
+    "@hookform/resolvers": "^5.0.1",
+    "ahooks": "^3.8.5",
+    "antd": "^5.25.2",
+    "clsx": "^2.1.1",
+    "dayjs": "^1.11.13",
+    "decimal.js": "^10.5.0",
+    "es-toolkit": "^1.38.0",
+    "motion": "^12.12.1",
+    "next": "15.3.2",
+    "next-rspack": "^15.3.2",
+    "postcss": "^8.5.3",
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0",
+    "react-hook-form": "^7.56.4",
+    "recharts": "^2.15.3",
+    "sass": "^1.89.0",
+    "tailwind-merge": "^3.3.0",
+    "uuid": "^11.1.0",
+    "zod": "^3.25.23"
+  },
+  "devDependencies": {
+    "@builder.io/partytown": "^0.10.3",
+    "@commitlint/cli": "^19.8.1",
+    "@commitlint/config-conventional": "^19.8.1",
+    "@eslint/eslintrc": "^3",
+    "@tailwindcss/postcss": "^4.1.7",
+    "@types/node": "^22",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "@types/uuid": "^10.0.0",
+    "autoprefixer": "^10.4.21",
+    "eslint": "^9",
+    "eslint-config-next": "15.3.2",
+    "husky": "^9.1.7",
+    "lint-staged": "^16.0.0",
+    "prettier": "^3.5.3",
+    "prettier-plugin-organize-imports": "^4.1.0",
+    "prettier-plugin-tailwindcss": "^0.6.11",
+    "tailwindcss": "^4.1.7",
+    "typescript": "^5"
+  },
+  "packageManager": "pnpm@10.11.0",
+  "author": {
+    "name": "crper",
+    "email": "crper@outlook.com"
+  },
+  "license": "MIT",
+  "homepage": "https://crper.github.io/next-simple-compound",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/crper/next-simple-compound"
+  }
+}
