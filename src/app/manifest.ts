@@ -8,7 +8,7 @@ export default function manifest(): MetadataRoute.Manifest {
     name: 'Compound+',
     short_name: 'Compound+',
     description: 'Compound+ 复利计算器',
-    start_url: '/',
+    start_url: getAssetPath('/'),
     display: 'standalone',
     background_color: '#ffffff',
     theme_color: '#000000',

@@ -31,19 +31,17 @@ const CompoundCalculator = () => {
   // 处理计算模式变更
   const handleCalculationModeChange = useCallback(
     (newMode: typeof calculationMode) => {
-      console.log('🔄 计算模式变更:', calculationMode, '->', newMode);
       // 重置计算结果
       resetCalculation();
       // 设置新的计算模式
       setCalculationMode(newMode);
     },
-    [calculationMode, resetCalculation, setCalculationMode]
+    [resetCalculation, setCalculationMode]
   );
 
   // 处理表单值变化时的自动计算 - 使用防抖功能
   const { run: handleFormValuesChange, cancel: cancelAutoCalculation } = useDebounceFn(
     (changedValues: FormValues, allValues: FormValues) => {
-      console.log('📝 表单值变化，自动计算');
       // 使用统一的验证工具检查必填字段
       if (areRequiredFieldsFilled(allValues, calculationMode)) {
         handleFormSubmit(allValues);
@@ -59,7 +57,6 @@ const CompoundCalculator = () => {
   // 处理手动计算（点击按钮） - 不使用防抖，立即执行
   const handleCalculate = useCallback(
     (formValues: FormValues, form?: FormInstance) => {
-      console.log('🖱️ 手动点击计算按钮');
       // 取消任何待执行的自动计算
       cancelAutoCalculation();
       // 立即执行计算

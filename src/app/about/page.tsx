@@ -1,6 +1,6 @@
 'use client';
 
-import { getRuntimeBasePath } from '@/utils/path';
+import { getAssetPath } from '@/utils/path';
 import {
   AppstoreOutlined,
   BarChartOutlined,
@@ -39,9 +39,6 @@ import {
 const { Title, Paragraph, Text } = Typography;
 
 export default function AboutPage() {
-  // 获取运行时 basePath
-  const basePath = getRuntimeBasePath();
-
   return (
     <div className="container mx-auto px-4 py-8 flex flex-col gap-y-2">
       {/* 介绍部分 */}
@@ -426,7 +423,7 @@ export default function AboutPage() {
               >
                 <div className="bg-white dark:bg-gray-700 p-2 rounded-lg inline-block">
                   <Image
-                    src={`${basePath}/images/sponsor/sponsor_wechat.jpg`}
+                    src={getAssetPath('/images/sponsor/sponsor_wechat.jpg')}
                     alt="微信打赏码"
                     className="max-w-full"
                     width={220}
@@ -449,7 +446,7 @@ export default function AboutPage() {
               >
                 <div className="bg-white dark:bg-gray-700 p-2 rounded-lg inline-block">
                   <Image
-                    src={`${basePath}/images/sponsor/sponsor_alipay.jpg`}
+                    src={getAssetPath('/images/sponsor/sponsor_alipay.jpg')}
                     alt="支付宝打赏码"
                     className="max-w-full"
                     width={220}

@@ -17,10 +17,6 @@ const nextConfig: NextConfig = {
   basePath: basePath,
   // 确保禁用 trailingSlash，避免 GitHub Pages 路由问题
   trailingSlash: false,
-  // 添加环境变量配置
-  env: {
-    NEXT_PUBLIC_BASE_PATH: basePath,
-  },
   eslint: {
     // 忽略生产构建中的错误
     ignoreDuringBuilds: true,

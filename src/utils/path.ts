@@ -46,30 +46,3 @@ export function getAssetPath(path: string): string {
 
   return `${basePath}${normalizedPath}`;
 }
-
-/**
- * 获取运行时 basePath（用于客户端组件）
- *
- * 这个函数专门为客户端组件设计，会优先使用环境变量，
- * 这样可以在开发时通过 .env.local 文件进行测试
- *
- * 优先级：
- * 1. 客户端环境变量 NEXT_PUBLIC_BASE_PATH
- * 2. 构建时配置 getBasePath()
- *
- * @returns basePath 字符串
- *
- * @example
- * // 在客户端组件中使用
- * const basePath = getRuntimeBasePath();
- * const imageSrc = `${basePath}/images/photo.jpg`;
- */
-export function getRuntimeBasePath(): string {
-  // 在客户端运行时，优先使用环境变量
-  if (typeof window !== 'undefined') {
-    return process.env.NEXT_PUBLIC_BASE_PATH || getBasePath();
-  }
-
-  // 在服务端构建时，直接使用构建时配置
-  return getBasePath();
-}

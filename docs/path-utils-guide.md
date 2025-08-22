@@ -8,7 +8,7 @@ GitHub Pages 部署时，项目会部署在 `https://username.github.io/reposito
 
 ## 解决方案
 
-我们在 `src/utils/path.ts` 中提供了三个工具函数来统一处理这个问题：
+我们在 `src/utils/path.ts` 中提供了两个工具函数来统一处理这个问题：
 
 ### 1. `getBasePath()`
 
@@ -37,9 +37,6 @@ const basePath = getBasePath();
 
 const nextConfig: NextConfig = {
   basePath: basePath,
-  env: {
-    NEXT_PUBLIC_BASE_PATH: basePath,
-  },
   // ... 其他配置
 };
 
@@ -80,28 +77,16 @@ export default function manifest() {
 }
 ```
 
-### 3. `getRuntimeBasePath()`
-
-**用途**: 获取运行时基础路径，专门用于客户端组件
-
-**使用场景**:
-
-- 客户端组件中的动态图片路径
-- 需要在运行时确定的资源路径
+### 3. 客户端组件中的资源路径（也使用 `getAssetPath()`）
 
 ```typescript
 'use client';
 
-import { getRuntimeBasePath } from '@/utils/path';
+import { getAssetPath } from '@/utils/path';
 
 export default function MyComponent() {
-  const basePath = getRuntimeBasePath();
-
   return (
-    <img
-      src={`${basePath}/images/photo.jpg`}
-      alt="照片"
-    />
+    <img src={getAssetPath('/images/photo.jpg')} alt="照片" />
   );
 }
 ```
@@ -125,11 +110,10 @@ export default function MyComponent() {
    icon: getAssetPath('/images/favicon.ico');
    ```
 
-3. **客户端组件中的动态资源** → 使用 `getRuntimeBasePath()`
+3. **客户端组件中的资源** → 使用 `getAssetPath()`
    ```typescript
    // 'use client' 组件中
-   const basePath = getRuntimeBasePath();
-   const imageSrc = `${basePath}/images/photo.jpg`;
+   const imageSrc = getAssetPath('/images/photo.jpg');
    ```
 
 ### ❌ 错误使用
@@ -141,19 +125,18 @@ export default function MyComponent() {
    const imageSrc = '/next-simple-compound/images/photo.jpg';
 
    // ✅ 正确
-   const basePath = getRuntimeBasePath();
-   const imageSrc = `${basePath}/images/photo.jpg`;
+   const imageSrc = getAssetPath('/images/photo.jpg');
    ```
 
-2. **不要在客户端组件中使用 getAssetPath()**
+2. **不要手写 basePath 前缀拼接**
 
    ```typescript
-   // ❌ 错误 - 在客户端组件中
-   const imageSrc = getAssetPath('/images/photo.jpg');
-
-   // ✅ 正确 - 在客户端组件中
-   const basePath = getRuntimeBasePath();
+   // ❌ 错误
+   const basePath = '/next-simple-compound';
    const imageSrc = `${basePath}/images/photo.jpg`;
+
+   // ✅ 正确
+   const imageSrc = getAssetPath('/images/photo.jpg');
    ```
 
 3. **不要在 next.config.ts 中重复定义 basePath 逻辑**
@@ -170,21 +153,8 @@ export default function MyComponent() {
 
 ## 开发测试
 
-在开发环境中测试 GitHub Pages 路径：
-
-1. 创建 `.env.local` 文件：
-
-   ```bash
-   NEXT_PUBLIC_BASE_PATH=/next-simple-compound
-   ```
-
-2. 启动开发服务器：
-
-   ```bash
-   pnpm dev
-   ```
-
-3. 访问 `http://localhost:3000` 查看路径是否正确
+开发环境下 `getBasePath()` 返回 `''`，`getAssetPath('/x')` 直接返回 `/x`。
+生产环境会自动返回 `'/next-simple-compound'` 并正确拼接，无需设置环境变量或修改代码。
 
 ## 部署验证
 
@@ -202,29 +172,27 @@ export default function MyComponent() {
 
 ## 文件使用总览
 
-| 文件                     | 使用的函数             | 说明                      |
-| ------------------------ | ---------------------- | ------------------------- |
-| `next.config.ts`         | `getBasePath()`        | Next.js 配置中的 basePath |
-| `src/app/layout.tsx`     | `getAssetPath()`       | favicon 等静态资源        |
-| `src/app/manifest.ts`    | `getAssetPath()`       | PWA 图标等静态资源        |
-| `src/app/about/page.tsx` | `getRuntimeBasePath()` | 客户端组件中的动态图片    |
+| 文件                     | 使用的函数       | 说明                      |
+| ------------------------ | ---------------- | ------------------------- |
+| `next.config.ts`         | `getBasePath()`  | Next.js 配置中的 basePath |
+| `src/app/layout.tsx`     | `getAssetPath()` | favicon 等静态资源        |
+| `src/app/manifest.ts`    | `getAssetPath()` | PWA 图标等静态资源        |
+| `src/app/about/page.tsx` | `getAssetPath()` | 客户端组件中的图片与资源  |
 
 ## 常见问题
 
-### Q: 为什么需要三个不同的函数？
+### Q: 为什么需要两个不同的函数？
 
 A:
 
 - `getBasePath()`: 用于配置文件，提供基础路径
-- `getAssetPath()`: 用于构建时的静态资源，在构建过程中就确定了完整路径
-- `getRuntimeBasePath()`: 用于客户端组件，可以在运行时动态获取路径，支持通过环境变量进行开发测试
+- `getAssetPath()`: 用于客户端/服务端构建与运行阶段的资源路径拼接，统一处理 basePath 前缀
 
 ### Q: 如何添加新的静态资源？
 
-A: 将资源放在 `public/` 目录下，然后使用相应的路径工具函数：
+A: 将资源放在 `public/` 目录下，然后统一使用：
 
-- 构建时静态资源：使用 `getAssetPath('/path/to/resource')`
-- 客户端动态资源：使用 `getRuntimeBasePath() + '/path/to/resource'`
+- 使用 `getAssetPath('/path/to/resource')`
 
 ### Q: 如何修改仓库名？
 
